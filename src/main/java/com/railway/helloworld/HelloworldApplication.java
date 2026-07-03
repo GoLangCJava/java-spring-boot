@@ -18,4 +18,9 @@ public class HelloworldApplication {
       return String.format("Hello world from Java Spring Boot!");
     }
 
+	@GetMapping("/hello")
+	public String hello1() {
+		return String.format("Hello world from Java Spring Boot1!");
+	}
+
 }
