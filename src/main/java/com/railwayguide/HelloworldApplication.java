@@ -20,7 +20,6 @@ public class HelloworldApplication {
     }
 
 	@GetMapping("/hello")
-	@CrossOrigin(origins = "https://golangcjava.github.io")
 	public String hello1() {
 		return String.format("Hello world from Java Spring Boot1!");
 	}
