@@ -2,6 +2,7 @@ package com.railwayguide.helloworld;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +20,7 @@ public class HelloworldApplication {
     }
 
 	@GetMapping("/hello")
+	@CrossOrigin(origins = "https://golangcjava.github.io")
 	public String hello1() {
 		return String.format("Hello world from Java Spring Boot1!");
 	}
