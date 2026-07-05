@@ -1,0 +1,100 @@
+/* project-summary deck — scoped component styles
+   Token-driven: every color references a CSS variable so the tokyo-night
+   theme (linked after base.css) flows through automatically. */
+
+/* ---- ambient background glow on every slide ---- */
+.slide::before{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(55% 45% at 88% 8%, color-mix(in srgb,var(--accent) 14%,transparent), transparent 60%),
+    radial-gradient(45% 45% at 6% 92%, color-mix(in srgb,var(--accent-2) 12%,transparent), transparent 60%);
+}
+.slide > *{position:relative;z-index:1}
+
+/* ---- headline sizing tuned for this deck ---- */
+.h1{font-size:74px;line-height:1.04;font-weight:800;letter-spacing:-.03em;color:var(--text-1)}
+.h2{font-size:50px;font-weight:700;letter-spacing:-.025em;color:var(--text-1)}
+.kicker{font-family:var(--font-mono);font-size:13px;font-weight:600;text-transform:none;letter-spacing:.02em}
+.kicker::before{content:"> "}
+.lede{color:var(--text-2)}
+
+/* ---- tech tags (mono chips) ---- */
+.tag{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:7px;
+  font-family:var(--font-mono);font-size:12.5px;background:var(--surface);
+  border:1px solid var(--border);color:var(--text-2)}
+.tag .dotc{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.tag.t-good{color:var(--good)} .tag.t-good .dotc{background:var(--good)}
+.tag.t-warn{color:var(--warn)} .tag.t-warn .dotc{background:var(--warn)}
+.tag.t-bad{color:var(--bad)}  .tag.t-bad .dotc{background:var(--bad)}
+
+.pill{display:inline-block;padding:5px 13px;border-radius:999px;font-size:12.5px;font-weight:500;
+  background:var(--surface-2);color:var(--text-2);border:1px solid var(--border)}
+.pill-accent{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);
+  border-color:color-mix(in srgb,var(--accent) 32%,transparent)}
+
+/* ---- cards ---- */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px 26px;box-shadow:var(--shadow)}
+.card-accent{border-top:3px solid var(--accent)}
+.card-glow{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 8%,var(--surface)),var(--surface))}
+.card h4{color:var(--text-1)}
+.card .dim{color:var(--text-2);font-size:15.5px;line-height:1.55}
+.card .num-big{font-family:var(--font-mono);font-size:34px;font-weight:700;color:var(--accent);
+  letter-spacing:-.02em;line-height:1}
+
+/* capability / stack card with a leading icon badge */
+.icon-card{display:flex;gap:16px;align-items:flex-start}
+.icon-badge{flex:none;width:42px;height:42px;border-radius:11px;display:flex;align-items:center;
+  justify-content:center;font-size:20px;background:color-mix(in srgb,var(--accent) 16%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+.icon-badge.b2{background:color-mix(in srgb,var(--accent-2) 16%,transparent);
+  border-color:color-mix(in srgb,var(--accent-2) 30%,transparent)}
+.icon-badge.b3{background:color-mix(in srgb,var(--accent-3) 16%,transparent);
+  border-color:color-mix(in srgb,var(--accent-3) 30%,transparent)}
+
+/* ---- architecture diagram ---- */
+.arch-flow{display:flex;align-items:stretch;gap:0;flex-wrap:nowrap}
+.arch-node{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:20px 16px;text-align:center;box-shadow:var(--shadow);min-width:0}
+.arch-node .ico{font-size:26px;margin-bottom:8px}
+.arch-node .nm{font-size:16px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.arch-node .sub{font-family:var(--font-mono);font-size:12px;color:var(--text-3)}
+.arch-node.is-data{background:linear-gradient(180deg,color-mix(in srgb,var(--accent-2) 12%,var(--surface)),var(--surface))}
+.arch-arrow{flex:none;display:flex;align-items:center;justify-content:center;width:34px;
+  color:var(--accent);font-size:22px;font-weight:700}
+.arch-cross{margin-top:26px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.arch-cross .lbl{font-family:var(--font-mono);font-size:12px;color:var(--text-3);letter-spacing:.06em;
+  text-transform:uppercase;margin-right:6px}
+
+/* ---- speaker / footer block on cover ---- */
+.speaker{display:flex;align-items:center;gap:14px;margin-top:30px}
+.speaker .av{width:52px;height:52px;border-radius:50%;background:var(--grad)}
+.speaker b{display:block;color:var(--text-1);font-size:17px}
+.speaker span{color:var(--text-3);font-size:13px;font-family:var(--font-mono)}
+
+/* ---- big stat (cover hero) ---- */
+.stat-hero{display:flex;gap:48px;margin-top:34px}
+.stat-hero .k{font-family:var(--font-mono);font-size:40px;font-weight:800;color:var(--accent);
+  letter-spacing:-.03em;line-height:1}
+.stat-hero .lbl{font-size:13px;color:var(--text-3);margin-top:6px}
+
+/* ---- roadmap / status two-column ---- */
+.col-title{font-family:var(--font-mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.road-item{display:flex;gap:12px;padding:11px 0;border-bottom:1px dashed var(--border);align-items:flex-start}
+.road-item:last-child{border-bottom:none}
+.road-item .pri{flex:none;width:30px;height:30px;border-radius:8px;display:flex;align-items:center;
+  justify-content:center;font-family:var(--font-mono);font-size:11px;font-weight:700}
+.pri.p0{background:color-mix(in srgb,var(--bad) 18%,transparent);color:var(--bad)}
+.pri.p1{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.pri.p2{background:color-mix(in srgb,var(--accent-3) 18%,transparent);color:var(--accent-3)}
+.pri.p3{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
+.road-item .t{color:var(--text-1);font-weight:600;font-size:16px}
+.road-item .d{color:var(--text-2);font-size:13.5px;line-height:1.5}
+.have-item{display:flex;gap:11px;align-items:flex-start;padding:10px 0}
+.have-item .ck{flex:none;color:var(--good);font-weight:800;font-size:15px;margin-top:1px}
+.have-item .t{color:var(--text-1);font-size:15.5px;line-height:1.5}
+
+/* big question mark on closer */
+.qmark{font-family:var(--font-mono);font-size:130px;font-weight:800;color:var(--accent);
+  letter-spacing:-.04em;line-height:1}

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>用户管理后端服务 · 项目总结</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/themes/tokyo-night.css">
+<link rel="stylesheet" href="assets/animations.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="deck" data-themes="tokyo-night">
+
+  <!-- progress bar (fixed) -->
+  <div class="progress-bar"><span></span></div>
+
+  <!-- 1. Cover -->
+  <section class="slide" data-title="封面">
+    <p class="kicker">project-summary / 2026-07-04</p>
+    <h1 class="h1 anim-fade-up" data-anim="fade-up">用户管理<br><span class="gradient-text">后端服务</span></h1>
+    <p class="lede mt-m" style="max-width:60ch">面向云端部署的轻量级后端 API —— 为任何需要「用户账号」能力的产品，提供统一的基础数据层。</p>
+    <div class="row mt-m" style="gap:10px;flex-wrap:wrap">
+      <span class="pill pill-accent">Java 21 LTS</span>
+      <span class="pill pill-accent">Spring Boot 3.3.4</span>
+      <span class="pill">MySQL</span>
+      <span class="pill">Docker</span>
+    </div>
+    <div class="speaker">
+      <div class="av"></div>
+      <div><b>项目总结汇报</b><span>java-spring-boot · 8 slides</span></div>
+    </div>
+    <div class="deck-footer"><span class="mono">spring-boot · 项目总结</span><span class="slide-number" data-current="1" data-total="8"></span></div>
+    <div class="notes">这是一个 Spring Boot 用户管理后端服务的项目总结。整套服务面向云端部署，为产品提供「用户账号」这一基础能力。后面我会从定位、架构、功能、技术栈、部署、到现状与规划，六七个维度讲清楚。</div>
+  </section>
+
+  <!-- 2. What it is -->
+  <section class="slide" data-title="项目定位">
+    <p class="kicker">// 项目定位</p>
+    <h2 class="h2">它是什么？</h2>
+    <p class="lede mt-m" style="font-size:24px;max-width:64ch">一个提供「用户账号管理」能力的<span style="color:var(--text-1)">后端服务（API）</span>。任何前端 —— 网页、App、小程序 —— 都能通过标准接口，完成用户的<span class="mono" style="color:var(--accent)">注册 · 查询 · 修改 · 注销</span>。</p>
+    <div class="grid g3 mt-l">
+      <div class="card card-accent icon-card">
+        <div class="icon-badge">👥</div>
+        <div><h4>用户账号中心</h4><p class="dim">统一的注册、信息维护与身份基础，一处管理、全局复用。</p></div>
+      </div>
+      <div class="card card-accent icon-card">
+        <div class="icon-badge b2">🔌</div>
+        <div><h4>标准化接口</h4><p class="dim">即插即用的 REST API，任何客户端都能快速对接，前后端解耦。</p></div>
+      </div>
+      <div class="card card-accent icon-card">
+        <div class="icon-badge b3">☁️</div>
+        <div><h4>云端就绪</h4><p class="dim">容器化打包，可一键部署到云端，弹性伸缩、按需上线。</p></div>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="mono">spring-boot · 项目总结</span><span class="slide-number" data-current="2" data-total="8"></span></div>
+    <div class="notes">先说定位：它是一个后端服务，对外提供「用户账号」相关能力。重点强调三件事——它是账号中心、接口标准化、云端就绪。对非技术听众，可以比喻成「所有产品都需要的那个用户管理底座」。</div>
+  </section>
+
+  <!-- 3. Architecture -->
+  <section class="slide" data-title="技术架构">
+    <p class="kicker">// 技术架构</p>
+    <h2 class="h2">分层架构，职责清晰</h2>
+    <p class="lede mt-s" style="font-size:18px">一次请求，自上而下层层流转；每层只做一件事，便于维护与扩展。</p>
+    <div class="arch-flow mt-l">
+      <div class="arch-node">
+        <div class="ico">📱</div><div class="nm">客户端</div><div class="sub">Web / App / 小程序</div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-node">
+        <div class="ico">🚪</div><div class="nm">接口层</div><div class="sub">Controller</div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-node">
+        <div class="ico">⚙️</div><div class="nm">业务层</div><div class="sub">Service</div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-node">
+        <div class="ico">🗂️</div><div class="nm">数据层</div><div class="sub">Repository</div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-node is-data">
+        <div class="ico">🗄️</div><div class="nm">数据库</div><div class="sub">MySQL</div>
+      </div>
+    </div>
+    <div class="arch-cross">
+      <span class="lbl">横切关注点</span>
+      <span class="tag"><span class="dotc"></span>全局跨域 CORS</span>
+      <span class="tag"><span class="dotc"></span>Swagger 接口文档</span>
+      <span class="tag"><span class="dotc"></span>自动审计时间戳</span>
+    </div>
+    <div class="deck-footer"><span class="mono">spring-boot · 项目总结</span><span class="slide-number" data-current="3" data-total="8"></span></div>
+    <div class="notes">架构是经典的四层分层：客户端发起请求，经过接口层（接收）、业务层（处理逻辑）、数据层（读写），最终落到 MySQL。这种结构的好处是每层职责单一，改一层不影响其他层。下方三个是贯穿所有层的通用能力：跨域、文档、时间戳。</div>
+  </section>
+
+  <!-- 4. Capabilities -->
+  <section class="slide" data-title="核心能力">
+    <p class="kicker">// 核心能力</p>
+    <h2 class="h2">它能做什么？</h2>
+    <div class="grid g3 mt-l">
+      <div class="card icon-card">
+        <div class="icon-badge">✏️</div>
+        <div><h4>用户注册</h4><p class="dim">创建新账号，自动记录创建时间。</p></div>
+      </div>
+      <div class="card icon-card">
+        <div class="icon-badge b2">🔍</div>
+        <div><h4>用户查询</h4><p class="dim">列表浏览、按 ID 查看、按用户名检索。</p></div>
+      </div>
+      <div class="card icon-card">
+        <div class="icon-badge b3">🔄</div>
+        <div><h4>信息更新</h4><p class="dim">修改用户名与密码，自动刷新更新时间。</p></div>
+      </div>
+      <div class="card icon-card">
+        <div class="icon-badge">🗑️</div>
+        <div><h4>账号注销</h4><p class="dim">按 ID 删除用户记录。</p></div>
+      </div>
+      <div class="card icon-card">
+        <div class="icon-badge b2">📑</div>
+        <div><h4>接口文档</h4><p class="dim">Swagger UI 自动生成，在线浏览与调试。</p></div>
+      </div>
+      <div class="card icon-card">
+        <div class="icon-badge b3">🌐</div>
+        <div><h4>跨域支持</h4><p class="dim">全局 CORS 配置，允许网页前端直连。</p></div>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="mono">spring-boot · 项目总结</span><span class="slide-number" data-current="4" data-total="8"></span></div>
+    <div class="notes">功能上覆盖完整的「增删改查」闭环：注册、查询、修改、注销。外加两个工程化能力——自动接口文档和跨域支持。共 7 个 REST 接口，足以支撑一个用户管理后台的日常操作。</div>
+  </section>
+
+  <!-- 5. Tech stack -->
+  <section class="slide" data-title="技术栈">
+    <p class="kicker">// 技术栈</p>
+    <h2 class="h2">现代、主流、可维护</h2>
+    <p class="lede mt-s" style="font-size:18px">采用业界主流技术选型 —— 长期可维护、人才储备充足、生态成熟。</p>
+    <div class="grid g3 mt-l">
+      <div class="card"><div class="dim" style="font-size:13px">语言</div><div class="num-big mt-s">Java 21</div><div class="dim mt-s" style="font-size:13px">长期支持版 LTS</div></div>
+      <div class="card"><div class="dim" style="font-size:13px">框架</div><div class="num-big mt-s">Spring Boot 3.3</div><div class="dim mt-s" style="font-size:13px">当前主流版本</div></div>
+      <div class="card"><div class="dim" style="font-size:13px">数据库</div><div class="num-big mt-s">MySQL</div><div class="dim mt-s" style="font-size:13px">腾讯云托管</div></div>
+      <div class="card"><div class="dim" style="font-size:13px">数据访问</div><div class="num-big mt-s" style="font-size:26px">Spring Data JPA</div><div class="dim mt-s" style="font-size:13px">ORM 框架</div></div>
+      <div class="card"><div class="dim" style="font-size:13px">构建工具</div><div class="num-big mt-s">Maven</div><div class="dim mt-s" style="font-size:13px">含 wrapper</div></div>
+      <div class="card"><div class="dim" style="font-size:13px">接口文档</div><div class="num-big mt-s" style="font-size:26px">OpenAPI 2.5</div><div class="dim mt-s" style="font-size:13px">springdoc</div></div>
+    </div>
+    <div class="deck-footer"><span class="mono">spring-boot · 项目总结</span><span class="slide-number" data-current="5" data-total="8"></span></div>
+    <div class="notes">技术选型上没有任何冷门依赖。Java 21 是最新长期支持版；Spring Boot 3.3 是当前主流框架；数据库用 MySQL。这套组合在团队招聘、长期维护、社区资料方面都有充足保障。</div>
+  </section>
+
+  <!-- 6. Deployment -->
+  <section class="slide" data-title="部署与运维">
+    <p class="kicker">// 部署与运维</p>
+    <h2 class="h2">容器化，开箱即上云</h2>
+    <div class="arch-flow mt-l">
+      <div class="arch-node"><div class="ico">📦</div><div class="nm">源码</div><div class="sub">git repo</div></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-node"><div class="ico">🔨</div><div class="nm">Maven 构建</div><div class="sub">mvnw</div></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-node"><div class="ico">🐳</div><div class="nm">Docker 镜像</div><div class="sub">JDK 21 alpine</div></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-node is-data"><div class="ico">🚀</div><div class="nm">云端部署</div><div class="sub">Railway</div></div>
+    </div>
+    <div class="grid g3 mt-l">
+      <div class="card card-glow icon-card">
+        <div class="icon-badge">🐳</div>
+        <div><h4>容器化打包</h4><p class="dim">基于标准 JDK 21 镜像，环境一致、可移植。</p></div>
+      </div>
+      <div class="card card-glow icon-card">
+        <div class="icon-badge b2">🚀</div>
+        <div><h4>一键部署</h4><p class="dim">适配 Railway 等云平台，推送即上线。</p></div>
+      </div>
+      <div class="card card-glow icon-card">
+        <div class="icon-badge b3">📖</div>
+        <div><h4>在线可观测</h4><p class="dim">Swagger UI 在线浏览与调试接口。</p></div>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="mono">spring-boot · 项目总结</span><span class="slide-number" data-current="6" data-total="8"></span></div>
+    <div class="notes">部署链路很顺：源码经 Maven 构建，打成 Docker 镜像，再部署到云端平台。因为是容器化的，本地、测试、生产环境完全一致，不会出现「我机器上能跑」的问题。配合 Swagger，接口上线后可以直接在线调试。</div>
+  </section>
+
+  <!-- 7. Status & Roadmap -->
+  <section class="slide" data-title="现状与路线图">
+    <p class="kicker">// 现状与路线图</p>
+    <h2 class="h2">当前阶段 与 下一步</h2>
+    <div class="grid g2 mt-l" style="align-items:start">
+      <div class="card">
+        <div class="col-title" style="color:var(--good)">✓ 已具备</div>
+        <div class="have-item"><span class="ck">✓</span><span class="t">完整的用户增删改查 API（7 个接口）</span></div>
+        <div class="have-item"><span class="ck">✓</span><span class="t">容器化打包，可云端部署</span></div>
+        <div class="have-item"><span class="ck">✓</span><span class="t">自动生成的接口文档（Swagger）</span></div>
+        <div class="have-item"><span class="ck">✓</span><span class="t">现代 Java 21 + Spring Boot 3.3 技术栈</span></div>
+      </div>
+      <div class="card">
+        <div class="col-title" style="color:var(--warn)">🚧 生产化加固路线图</div>
+        <div class="road-item"><span class="pri p0">P0</span><div><div class="t">安全加固</div><div class="d">密码加密存储（BCrypt）、数据库口令外置到环境变量</div></div></div>
+        <div class="road-item"><span class="pri p1">P1</span><div><div class="t">接入认证授权</div><div class="d">引入 Spring Security，登录与权限校验</div></div></div>
+        <div class="road-item"><span class="pri p2">P2</span><div><div class="t">质量保障</div><div class="d">补齐接口与单元测试、接入持续集成（CI）</div></div></div>
+        <div class="road-item"><span class="pri p3">P3</span><div><div class="t">数据库演进</div><div class="d">引入 Flyway 管理表结构变更</div></div></div>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="mono">spring-boot · 项目总结</span><span class="slide-number" data-current="7" data-total="8"></span></div>
+    <div class="notes">诚实地说：项目目前处于「可运行的原型」阶段，核心功能完整、能上云，但距离生产级还有明确的加固项。最关键的是 P0——密码目前是明文存储、数据库口令也写死在配置里，这是上线前必须解决的安全红线。P1-P3 是逐步走向生产成熟的路径。给领导的核心信息是：能用，但要补这几块才能真正对外。</div>
+  </section>
+
+  <!-- 8. Q&A -->
+  <section class="slide center tc" data-title="Q and A">
+    <div>
+      <div class="qmark">?</div>
+      <h2 class="h2">Q &amp; A</h2>
+      <p class="lede" style="margin:14px auto">欢迎讨论 · 谢谢</p>
+      <div class="row mt-l" style="justify-content:center;gap:10px">
+        <span class="pill pill-accent">项目总结</span>
+        <span class="pill">spring-boot</span>
+      </div>
+    </div>
+    <div class="deck-footer"><span class="mono">spring-boot · 项目总结</span><span class="slide-number" data-current="8" data-total="8"></span></div>
+    <div class="notes">开放问答。预期会被问到：安全怎么补、上线时间、人力投入。重点回应 P0 安全加固是上线前置条件。</div>
+  </section>
+
+</div>
+<script src="assets/runtime.js"></script>
+</body>
+</html>
